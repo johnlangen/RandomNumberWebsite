@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Website</title>
+	<style>
+		.navbar {
+			background-color: #333333;
+			color: white;
+			font-family: "Open Sans", sans-serif;
+			font-size: 16px;
+			height: 70px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 20px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		}
+
+		.navbar-link {
+			text-decoration: none;
+			color: white;
+			padding: 10px 15px;
+			position: relative;
+			border-radius: 3px;
+			transition: background-color 0.2s ease;
+		}
+
+		.navbar-link::after {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			bottom: 0;
+			left: 0;
+			background-color: #ffffff;
+			transform: scaleX(0);
+			transform-origin: bottom right;
+			transition: transform 0.2s ease-out;
+		}
+
+		.navbar-link:hover {
+			background-color: #ffffff;
+			color: #333333;
+		}
+
+		.navbar-link:hover::after {
+			transform: scaleX(1);
+			transform-origin: bottom left;
+		}
+
+		.active {
+			background-color: #444444;
+			color: #ffffff;
+		}
+
+		.navbar-user {
+			display: flex;
+			align-items: center;
+		}
+
+		.navbar-welcome {
+			margin-right: 10px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar">
+		<div class="navbar-items">
+			<a href="{% url 'public:index' %}" class="navbar-link {% if request.path == index_url %}active{% endif %}">Home</a>
+		</div>
+		<div class="navbar-user">
+			{% if user.is_authenticated%}
+			<span class="navbar-welcome">Welcome, {{ user.username}}</span>
+			<a href="{%url 'logout' %}" class="navbar-link">Logout</a>
+			{% else %}
+			<a href="{%url 'login' %}" class="navbar-link">Login</a>
+			{% endif %}
+		</div>
+	</nav>
+</body>
+</html>
